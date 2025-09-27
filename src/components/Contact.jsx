@@ -40,19 +40,22 @@ const Contact = () => {
       icon: Mail,
       title: 'Email Us',
       value: 'contactakvora@gmail.com',
+      href: 'mailto:contactakvora@gmail.com',
       description: 'Send us an email anytime!'
     },
     {
       icon: Phone,
       title: 'Call Us',
-      value: '+91 95666 18290',
+      value: ['+91 93619 92041',  '+91 80569 63761'],
+      href: ['tel:+919361992041', 'tel:+918056963761'],
       description: 'Mon-Sat from 8am to 6pm'
     },
     {
       icon: MapPin,
       title: 'Visit Us',
-      value: 'San Francisco, CA',
-      description: 'Come say hello at our office'
+      value: 'Hosur, Bangalore',
+      href: null, // No link for address
+      description: 'Contact us for more information!'
     }
   ];
 
@@ -267,7 +270,32 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-lg mb-1">{info.title}</h4>
-                      <p className="text-tech-blue font-medium mb-1">{info.value}</p>
+                      {info.href ? (
+                        Array.isArray(info.value) ? (
+                          // Handle multiple phone numbers
+                          info.value.map((val, idx) => (
+                            <a
+                              key={idx}
+                              href={info.href[idx]}
+                              className="text-tech-blue font-medium mb-1 hover:text-tech-purple transition-colors duration-300 cursor-pointer block"
+                              aria-label={`${info.title}: ${val}`}
+                            >
+                              {val}
+                            </a>
+                          ))
+                        ) : (
+                          // Handle single contact info
+                          <a
+                            href={info.href}
+                            className="text-tech-blue font-medium mb-1 hover:text-tech-purple transition-colors duration-300 cursor-pointer block"
+                            aria-label={`${info.title}: ${info.value}`}
+                          >
+                            {info.value}
+                          </a>
+                        )
+                      ) : (
+                        <p className="text-tech-blue font-medium mb-1">{info.value}</p>
+                      )}
                       <p className="text-gray-600 text-sm">{info.description}</p>
                     </div>
                   </motion.div>

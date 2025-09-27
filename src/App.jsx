@@ -16,6 +16,12 @@ function App() {
 
   // Handle section change with transition state and scroll to top
   const handleSectionChange = (section) => {
+    // Special case: always scroll to top when clicking Home, even if already on home
+    if (section === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (section === activeSection) return; // Exit early only if already on home after scrolling
+    }
+    
     if (section === activeSection) return;
     
     setIsTransitioning(true);
